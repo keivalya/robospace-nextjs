@@ -8,9 +8,9 @@ export const metadata = {
   title: 'RoboSpace - Robot Simulation Platform',
   description: 'Simulate and train robots in your browser. No setup, no GPUs, no Docker.',
   icons: {
-    icon: '/robospace.ico',
-    shortcut: '/robospace.ico',
-    apple: '/robospace.ico',
+    icon: 'robo_favicon.ico',
+    shortcut: 'robo_favicon.ico',
+    apple: 'robo_favicon.ico',
   },
 };
 
@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/robospace.ico" type="image/x-icon" />
+        <link rel="icon" href="robo_favicon.ico" type="image/x-icon" />
       </head>
       <body className={inter.className}>
         <AuthProvider>
