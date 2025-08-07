@@ -8,9 +8,9 @@ export const metadata = {
   title: 'RoboSpace - Robot Simulation Platform',
   description: 'Simulate and train robots in your browser. No setup, no GPUs, no Docker.',
   icons: {
-    icon: './robospace.ico',
-    shortcut: './robospace.ico',
-    apple: './robospace.ico',
+    icon: '/robospace.ico',
+    shortcut: '/robospace.ico',
+    apple: '/robospace.ico',
   },
 };
 
