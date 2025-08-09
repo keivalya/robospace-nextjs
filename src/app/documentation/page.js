@@ -82,7 +82,7 @@ export default function Documentation() {
         { id: 'getting-started', title: '🚀 Getting Started' },
         { id: 'core-functions', title: '🔧 Core Functions' },
         // { id: 'robot-examples', title: '🤖 Robot Examples' },
-        { id: 'advanced', title: '💡 Advanced Topics' },
+        // { id: 'advanced', title: '💡 Advanced Topics' },
     ];
 
     return (
