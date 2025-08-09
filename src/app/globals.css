@@ -535,7 +535,7 @@ body {
 .dashboard-controls {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
+  gap: var(--space-sm);
 }
 
 .gpu-toggle {
@@ -587,7 +587,7 @@ body {
 
 .demo-container {
   position: relative;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 150px);
   background: var(--background);
   margin: var(--space-xs);
   border-radius: var(--radius-lg);

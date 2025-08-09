@@ -33,6 +33,12 @@ export default function Hero() {
             >
               Start Simulation
             </button>
+            <button 
+              className="btn btn-outline btn-lg"
+              onClick={() => router.push('/documentation')}
+            >
+              View Documentation
+            </button>
           </div>
         </div>
       </div>

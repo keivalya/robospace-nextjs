@@ -101,6 +101,8 @@ export default function LoginModal() {
               onClick={handleGoogleLogin}
               disabled={loading}
             >
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
+                        alt="Google" style={{height: '20px'}}></img>
               Sign in with Google
             </button>
           </div>
