@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="footer-section">
             <h4>Product</h4>
             <Link href="/#features">Features</Link>
-            <Link href="/dashboard">Demo</Link>
+            <Link href="https://demo.robospace.app">Demo</Link>
           </div>
           <div className="footer-section">
             <h4>Company</h4>
