@@ -138,16 +138,58 @@
   }
   
   .code-block {
-    background: #0d0d0d;
-    border: 1px solid #222;
+    background: #1e1e1e;  /* VS Code dark background */
+    border: 1px solid #333;
     border-radius: 6px;
-    padding: 1rem;
+    padding: 1.25rem;
     overflow-x: auto;
     margin: 1rem 0;
-    color: #0f0;
-    font-family: 'Courier New', monospace;
+    color: #d4d4d4;  /* Default text color */
+    font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .code-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #007acc, #1e88e5, #42a5f5);
+    border-radius: 6px 6px 0 0;
+  }
+
+  .function-signature {
+    background: #2d2d30;  /* Slightly lighter than code blocks */
+    border: 1px solid #464647;
+    border-left: 3px solid #007acc;  /* Blue accent */
+    border-radius: 4px;
+    padding: 0.875rem 1rem;
+    margin: 1rem 0;
+    font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    color: #dcdcaa;  /* Function color */
+    font-size: 0.9rem;
+  }
+  
+  .function-list code {
+    color: #4fc1ff;  /* Bright blue for inline code */
+    background: #2d2d30;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
     font-size: 0.875rem;
-    line-height: 1.6;
+  }
+  
+  /* Inline code in paragraphs */
+  .doc-card code {
+    color: #ce9178;  /* Orange-ish for inline code */
+    background: #2d2d30;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.875rem;
   }
   
   .robot-badge {
@@ -222,3 +264,47 @@
       font-size: 2rem;
     }
   }
+
+/* Simplified CSS when using react-syntax-highlighter */
+.code-block-wrapper {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 0.25rem 0.75rem;
+  background: #007acc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.code-copy-btn:hover {
+  background: #005a9e;
+  transform: translateY(-1px);
+}
+
+.code-copy-btn:active {
+  transform: translateY(0);
+}
+
+/* Add the blue top border */
+.code-block-wrapper > pre::before {
+  /* background: #1d1f21; */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #007acc, #1e88e5, #42a5f5);
+  border-radius: 6px 6px 0 0;
+}
+

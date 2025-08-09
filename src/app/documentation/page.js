@@ -5,93 +5,130 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import './documentation.css';
 
-export default function Documentation() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
-  const [activeSection, setActiveSection] = useState('getting-started');
-  const [searchTerm, setSearchTerm] = useState('');
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-  useEffect(() => {
-    // Track scroll position for active section highlighting
-    const handleScroll = () => {
-      const sections = document.querySelectorAll('.doc-section');
-      const scrollPosition = window.scrollY + 100;
 
-      sections.forEach((section) => {
-        const top = section.offsetTop;
-        const height = section.offsetHeight;
-        
-        if (scrollPosition >= top && scrollPosition < top + height) {
-          setActiveSection(section.id);
-        }
-      });
+// Clean CodeBlock component with react-syntax-highlighter
+const CodeBlock = ({ code, language = 'python' }) => {
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(code);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveSection(sectionId);
-    }
-  };
-
-  const sections = [
-    { id: 'getting-started', title: '🚀 Getting Started' },
-    { id: 'core-functions', title: '🔧 Core Functions' },
-    { id: 'robot-examples', title: '🤖 Robot Examples' },
-    { id: 'advanced', title: '💡 Advanced Topics' },
-  ];
-
-  return (
-    <>
-      <Navigation />
-      <div className="documentation-page">
-        <div className="doc-sidebar">
-          <div className="sidebar-header">
-            <h3>Documentation</h3>
-            <input
-              type="text"
-              placeholder="Search docs..."
-              className="doc-search"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <nav className="doc-nav">
-            {sections.map((section) => (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                className={`doc-nav-item ${activeSection === section.id ? 'active' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(section.id);
+    return (
+        <div className="code-block-wrapper">
+            <button className="code-copy-btn" onClick={handleCopy}>
+                {copied ? 'Copied!' : 'Copy'}
+            </button>
+            <SyntaxHighlighter
+                language={language}
+                style={oneDark}
+                wrapLongLines
+                customStyle={{
+                    opacity: "1",
+                    margin: 0,
+                    borderRadius: '6px',
+                    padding: '1.25rem',
+                    paddingTop: '2.5rem',
+                    fontSize: '0.9rem',
+                    lineHeight: '1.7',
                 }}
-              >
-                {section.title}
-              </a>
-            ))}
-          </nav>
+            >{code.replace(/^\s+/, '')}</SyntaxHighlighter>
         </div>
+    );
+};
 
-        <div className="doc-content">
-          <div className="doc-header">
-            <h1>RoboSpace API Documentation</h1>
-            <p>Complete guide for controlling robots in MuJoCo simulation</p>
-          </div>
+export default function Documentation() {
+    const { user, loading } = useAuth();
+    const router = useRouter();
+    const [activeSection, setActiveSection] = useState('getting-started');
+    const [searchTerm, setSearchTerm] = useState('');
 
-          <section id="getting-started" className="doc-section">
-            <h2>🚀 Getting Started</h2>
-            <div className="doc-card">
-              <h3>Quick Start</h3>
-              <pre className="code-block">
-{`import numpy as np
+    useEffect(() => {
+        // Track scroll position for active section highlighting
+        const handleScroll = () => {
+            const sections = document.querySelectorAll('.doc-section');
+            const scrollPosition = window.scrollY + 100;
+
+            sections.forEach((section) => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+
+                if (scrollPosition >= top && scrollPosition < top + height) {
+                    setActiveSection(section.id);
+                }
+            });
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const scrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setActiveSection(sectionId);
+        }
+    };
+
+    const sections = [
+        { id: 'getting-started', title: '🚀 Getting Started' },
+        { id: 'core-functions', title: '🔧 Core Functions' },
+        // { id: 'robot-examples', title: '🤖 Robot Examples' },
+        { id: 'advanced', title: '💡 Advanced Topics' },
+    ];
+
+    return (
+        <>
+            <Navigation />
+            <div className="documentation-page">
+                <div className="doc-sidebar">
+                    <div className="sidebar-header">
+                        <h3>Documentation</h3>
+                        <input
+                            type="text"
+                            placeholder="Search docs..."
+                            className="doc-search"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+                    <nav className="doc-nav">
+                        {sections.map((section) => (
+                            <a
+                                key={section.id}
+                                href={`#${section.id}`}
+                                className={`doc-nav-item ${activeSection === section.id ? 'active' : ''}`}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    scrollToSection(section.id);
+                                }}
+                            >
+                                {section.title}
+                            </a>
+                        ))}
+                    </nav>
+                </div>
+
+                <div className="doc-content">
+                    <div className="doc-header">
+                        <h1>RoboSpace API Documentation</h1>
+                        <p>Complete guide for controlling robots in MuJoCo simulation</p>
+                    </div>
+
+                    <section id="getting-started" className="doc-section">
+                        <h2>🚀 Getting Started</h2>
+                        <div className="doc-card">
+                            <h3>Quick Start</h3>
+                            <CodeBlock code={`# Quick Start
+import numpy as np
 import math
 
 # Get basic information
@@ -106,49 +143,49 @@ set_control(control)
 pos = get_qpos()
 vel = get_qvel()
 print(f"Position: {pos[:3]}")
-print(f"Velocity: {vel[:3]}")`}
-              </pre>
-            </div>
+print(f"Velocity: {vel[:3]}")`} />
+                        </div>
 
-            <div className="doc-card">
-              <h3>Available Functions</h3>
-              <ul className="function-list">
-                <li><code>get_num_actuators()</code> - Get number of actuators</li>
-                <li><code>get_actuator_names()</code> - Get actuator names</li>
-                <li><code>get_actuator_ranges()</code> - Get control limits</li>
-                <li><code>set_control(ctrl)</code> - Set control values</li>
-                <li><code>get_control()</code> - Get current control</li>
-                <li><code>get_qpos()</code> - Get joint positions</li>
-                <li><code>get_qvel()</code> - Get joint velocities</li>
-                <li><code>get_time()</code> - Get simulation time</li>
-                <li><code>reset()</code> - Reset simulation</li>
-                <li><code>step()</code> - Step simulation forward</li>
-              </ul>
-            </div>
-          </section>
+                        <div className="doc-card">
+                            <h3>Available Functions</h3>
+                            <ul className="function-list">
+                                <li><code>get_num_actuators()</code> - Get number of actuators</li>
+                                <li><code>get_actuator_names()</code> - Get actuator names</li>
+                                <li><code>get_actuator_ranges()</code> - Get control limits</li>
+                                <li><code>set_control(ctrl)</code> - Set control values</li>
+                                <li><code>get_control()</code> - Get current control</li>
+                                <li><code>get_qpos()</code> - Get joint positions</li>
+                                <li><code>get_qvel()</code> - Get joint velocities</li>
+                                <li><code>get_time()</code> - Get simulation time</li>
+                                <li><code>reset()</code> - Reset simulation</li>
+                                <li><code>step()</code> - Step simulation forward</li>
+                            </ul>
+                        </div>
+                    </section>
 
-          <section id="core-functions" className="doc-section">
-            <h2>🔧 Core Functions</h2>
-            
-            <div className="doc-card">
-              <h3>get_num_actuators()</h3>
-              <div className="function-signature">get_num_actuators() → int</div>
-              <p>Returns the total number of actuators in the current robot model.</p>
-              <pre className="code-block">
-{`n_actuators = get_num_actuators()
+                    <section id="core-functions" className="doc-section">
+                        <h2>🔧 Core Functions</h2>
+
+                        <div className="doc-card">
+                            <h3>get_num_actuators()</h3>
+                            <div className="function-signature">get_num_actuators() → int</div>
+                            <p>Returns the total number of actuators in the current robot model.</p>
+                            <CodeBlock code=
+                                {`# Get number of actuators
+n_actuators = get_num_actuators()
 print(f"Number of actuators: {n_actuators}")
 
 # Create control array with correct size
 control = [0.0] * n_actuators`}
-              </pre>
-            </div>
+                            />
+                        </div>
 
-            <div className="doc-card">
-              <h3>set_control(ctrl)</h3>
-              <div className="function-signature">set_control(ctrl: list[float]) → None</div>
-              <p>Sets control values for all actuators. Input can be a list or numpy array.</p>
-              <pre className="code-block">
-{`# Set all actuators to neutral
+                        <div className="doc-card">
+                            <h3>set_control(ctrl)</h3>
+                            <div className="function-signature">set_control(ctrl: list[float]) → None</div>
+                            <p>Sets control values for all actuators. Input can be a list or numpy array.</p>
+                            <CodeBlock code=
+                                {`# Set all actuators to neutral
 control = [0.0] * get_num_actuators()
 set_control(control)
 
@@ -157,18 +194,17 @@ import math
 t = get_time()
 control = [0.5 * math.sin(t + i*0.5) for i in range(get_num_actuators())]
 set_control(control)`}
-              </pre>
-            </div>
+                            />
+                        </div>
 
-            <div className="doc-card">
-              <h3>get_qpos() & get_qvel()</h3>
-              <div className="function-signature">
-                get_qpos() → numpy.array<br/>
-                get_qvel() → numpy.array
-              </div>
-              <p>Get joint positions and velocities respectively.</p>
-              <pre className="code-block">
-{`# PD Controller example
+                        <div className="doc-card">
+                            <h3>get_qpos() & get_qvel()</h3>
+                            <div className="function-signature">
+                                get_qpos() → numpy.array<br />
+                                get_qvel() → numpy.array
+                            </div>
+                            <p>Get joint positions and velocities respectively.</p>
+                            <CodeBlock code={`# PD Controller example
 import numpy as np
 
 def pd_controller(target, kp=10.0, kd=1.0):
@@ -184,12 +220,11 @@ def pd_controller(target, kp=10.0, kd=1.0):
     control = kp * pos_error + kd * vel_error
     set_control(control.tolist())
     
-    return np.linalg.norm(pos_error)`}
-              </pre>
-            </div>
-          </section>
+    return np.linalg.norm(pos_error)`} />
+                        </div>
+                    </section>
 
-          <section id="robot-examples" className="doc-section">
+                    {/* <section id="robot-examples" className="doc-section">
             <h2>🤖 Robot-Specific Examples</h2>
 
             <div className="doc-card">
@@ -317,9 +352,9 @@ move_to_position(place)
 move_to_position(home)`}
               </pre>
             </div>
-          </section>
+          </section> */}
 
-          <section id="advanced" className="doc-section">
+                    {/* <section id="advanced" className="doc-section">
             <h2>💡 Advanced Topics</h2>
 
             <div className="doc-card">
@@ -365,10 +400,10 @@ move_to_position(home)`}
                 <li><strong>Save working positions:</strong> Store known-good configurations for recovery</li>
               </ul>
             </div>
-          </section>
-        </div>
-      </div>
-      <Footer />
-    </>
-  );
+          </section> */}
+                </div>
+            </div>
+            <Footer />
+        </>
+    );
 }
