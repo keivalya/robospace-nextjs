@@ -73,6 +73,7 @@ export default function Navigation() {
           ) : (
             <>
               <Link href="/#features" onClick={closeMenu}>Features</Link>
+              <Link href="/documentation" onClick={closeMenu}>Documentation</Link>
               <Link href="/#about" onClick={closeMenu}>About</Link>
               <Link href="/#pricing" onClick={closeMenu}>Pricing</Link>
               <button 
