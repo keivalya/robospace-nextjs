@@ -41,7 +41,7 @@ export default function Dashboard() {
       <div className="dashboard">
         <div className="dashboard-header">
           <div className="container">
-            <h2>Robot Simulation Workspace</h2>
+            <h3>Robot Simulation Workspace</h3>
             <div className="dashboard-controls">
               <div className="gpu-toggle">
                 <span>GPU</span>
@@ -79,7 +79,7 @@ export default function Dashboard() {
           
           <iframe
             className="demo-iframe"
-            src="https://www.keivalya.com/robospace-demo/"
+            src="https://demo.robospace.app"
             allow="fullscreen; accelerometer; gyroscope"
             style={{ display: loading ? 'none' : 'block' }}
           />

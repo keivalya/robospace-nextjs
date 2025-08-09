@@ -522,7 +522,7 @@ body {
 
 .dashboard-header {
   background: var(--surface);
-  padding: var(--space-md) 0;
+  padding: var(--space-xs) 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -589,15 +589,15 @@ body {
   position: relative;
   height: calc(100vh - 200px);
   background: var(--background);
-  margin: var(--space-md);
+  margin: var(--space-xs);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
 .demo-controls {
   position: absolute;
-  top: var(--space-md);
-  right: var(--space-md);
+  top: var(--space-sm);
+  right: var(--space-sm);
   z-index: 10;
 }
 
